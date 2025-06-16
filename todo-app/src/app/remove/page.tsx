@@ -1,56 +1,48 @@
 'use client';
 
-import { useState } from "react";
 import Link from 'next/link';
+import { useState } from "react";
 
-class Task {
-  constructor(name, id) {
+class Student {
+  constructor(name, num) {
     this.name = name;
-    this.id = id;
+    this.num = num;
   }
 }
 
-let counter = 0;
-
 export default function TodoApp() {
-  const [tasks, setTasks] = useState([]);
+  const [students, setStudents] = useState([]);
   const [inputName, setInputName] = useState("");
 
-  function addTask() {
-    if (inputName.trim() === "") return;
-    const newTask = new Task(inputName, counter += 1);
-    setTasks([...tasks, newTask]);
-    setInputName("");
-  }
-
-  function removeTask(idToRemove) {
-    // Filter out the task with the matching id
-    const updatedTasks = tasks.filter(task => task.id !== idToRemove);
-    setTasks(updatedTasks);
+  function addStudent() {
+    if (inputName.trim() === "") return; // Prevent adding empty names
+    const newstudent = new Student(inputName, students.length + 1);
+    setStudents([...students, newstudent]);
+    setInputName(""); // Clear input after adding
   }
 
   return (
     <div style={{ padding: '20px' }}>
       <Link href="/">
-        <button>Go to Home Page</button>
-      </Link>
-      <h1>Task List, Remove</h1>
+  <button>Go to Home Page</button>
+</Link>
 
+      <h1>Number List</h1>
+      
       <input
         type="text"
-        placeholder="Enter task name"
+        placeholder="Enter student name"
         value={inputName}
         onChange={(e) => setInputName(e.target.value)}
       />
 
-      <button onClick={addTask}>Add Task</button>
+      <button onClick={addStudent}>
+        Add Student
+      </button>
 
       <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            {task.name} is task number {task.id}, 
-            <button onClick={() => removeTask(task.id)}>Remove</button>
-          </li>
+        {students.map((student, idx) => (
+          <li key={idx}>{student.name} is the {student.num} student</li>
         ))}
       </ul>
     </div>
